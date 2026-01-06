@@ -1,0 +1,57 @@
+name: Generate PCB Manufacturing Files
+
+on:
+  workflow_dispatch:          # Manual trigger
+  push:
+    paths:
+      - 'specs/*.json'        # Auto-trigger on spec changes
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install KiCad
+        run: |
+          sudo add-apt-repository --yes ppa:kicad/kicad-7.0-releases
+          sudo apt update
+          sudo apt install -y kicad
+
+      - name: Install Python dependencies
+        run: |
+          pip install -r generator/requirements.txt
+
+      - name: Generate PCB files
+        run: |
+          cd generator
+          python main.py
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: manufacturing-files
+          path: |
+            GERBER_JLC.zip
+            BOM_JLC.xlsx
+            CPL_JLC.csv
+            Schematic.pdf
+          retention-days: 30
+
+      - name: Create GitHub Release
+        if: github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.run_number }}
+          files: |
+            GERBER_JLC.zip
+            BOM_JLC.xlsx
+            CPL_JLC.csv
+          body: "Auto-generated PCB files for 48V 20A BLDC controller"
