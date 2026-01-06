@@ -1,0 +1,12 @@
+├── .github/
+│   └── workflows/
+│       └── generate-pcb.yml          # GitHub Actions workflow
+├── generator/
+│   ├── main.py                      # Python generator script
+│   ├── templates/
+│   │   ├── kicad_project.kicad_pro  # KiCad project template
+│   │   └── schematic_template.sch   # Schematic template (Jinja2)
+│   └── footprints/                  # Custom footprints (if needed)
+├── specs/
+│   └── controller_spec.json         # Your design parameters
+└── README.md                        # Instructions
