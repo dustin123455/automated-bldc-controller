@@ -1,0 +1,31 @@
+{
+  "project_name": "48V-20A-3P-6HALL",
+  "board_dimensions": {"width": 100, "height": 60},
+  "copper_weight": "2 oz",
+  "voltage": {"nominal": 48, "max": 60},
+  "current": {"continuous": 20, "peak": 30},
+  "components": {
+    "mosfets": {"part": "IRFB4110PbF", "package": "TO-220", "quantity": 6, "lcsc": "C2566"},
+    "gate_driver": {"part": "DRV8302DCAR", "package": "HTSSOP-28", "lcsc": "C73012"},
+    "mcu": {"part": "STM32F405RGT6", "package": "LQFP-64", "lcsc": "C34788"},
+    "current_amps": {"part": "INA240A1DR", "package": "SOIC-8", "quantity": 3, "lcsc": "C8734"},
+    "shunts": {"value": "1mΩ", "package": "2512", "quantity": 3, "lcsc": "C50323"},
+    "hall_connector": {"part": "B06B-XASK-1", "package": "JST-XA-6P", "lcsc": "C295430"}
+  },
+  "placement_rules": {
+    "mosfets_high_side": {"x": 15, "y": 10, "spacing": 12},
+    "mosfets_low_side": {"x": 15, "y": 50, "spacing": 12},
+    "gate_driver": {"x": 50, "y": 30},
+    "mcu": {"x": 75, "y": 15},
+    "current_amps": {"x": 75, "y": 45, "spacing": 8},
+    "hall_connector": {"x": 5, "y": 5}
+  },
+  "routing_rules": {
+    "phase_trace_width": 3.0,
+    "power_trace_width": 4.0,
+    "gate_trace_width": 0.3,
+    "clearance": 0.2,
+    "via_diameter": 0.6,
+    "via_drill": 0.3
+  }
+}
